@@ -7,6 +7,9 @@ const path = require('path');
 // Load environment variables from .env
 dotenv.config();
 
+// Bypass SSL certificate validation for self-signed certificates (useful for local/internal calls on the same machine)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
