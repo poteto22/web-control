@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bangkok69 Election Live Dashboard</title>
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom CSS stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-chart-line-up"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Bangkok69</h1>
+          <span>Election Live Control</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-page="prime">
+          <i class="fa-solid fa-square-poll-vertical"></i>
+          <span>คะแนนผู้สมัครผู้ว่า</span>
+        </a>
+        <a href="#" class="nav-item" data-page="area-prime">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>คะแนนผู้สมัครผู้ว่า แยกเขต</span>
+        </a>
+        <a href="#" class="nav-item" data-page="area-local">
+          <i class="fa-solid fa-users-viewfinder"></i>
+          <span>คะแนนผู้สมัคร ส.ก. รายเขต</span>
+        </a>
+        <a href="#" class="nav-item" data-page="webhook">
+          <i class="fa-solid fa-circle-nodes"></i>
+          <span>Webhook & Settings</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="status-panel">
+          <div class="status-indicator">
+            <span class="status-dot online"></span>
+            <span class="status-text">Database Connected</span>
+          </div>
+          
+          <div class="auto-refresh-control">
+            <div class="refresh-info">
+              <span>ดึงข้อมูลอัตโนมัติ (10s)</span>
+              <span id="countdown">10s</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="refresh-toggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        <div class="footer-credit">
+          © 2026 Bangkok69 Control Panel
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <h2 id="page-title">คะแนนผู้สมัครผู้ว่า</h2>
+          <p id="page-subtitle">แสดงผลคะแนนการเลือกตั้งผู้ว่าฯ / ส.ก. ทั้งหมด</p>
+        </div>
+        
+        <div class="header-right">
+          <div class="last-update">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>อัปเดตล่าสุด: </span>
+            <strong id="last-update-time">--:--:--</strong>
+          </div>
+          <button id="refresh-now-btn" class="btn btn-secondary">
+            <i class="fa-solid fa-arrows-rotate"></i> รีเฟรชทันที
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Statistics Widget Bar (Dynamic updates depending on view) -->
+      <section class="quick-stats" id="quick-stats-bar">
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa-solid fa-box-archive"></i></div>
+          <div class="stat-details">
+            <span class="stat-label">นับคะแนนแล้ว</span>
+            <h3 class="stat-value" id="stat-progress">--%</h3>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa-solid fa-users"></i></div>
+          <div class="stat-details">
+            <span class="stat-label">จำนวนผู้สมัครทั้งหมด</span>
+            <h3 class="stat-value" id="stat-candidates-count">0</h3>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fa-solid fa-check-to-slot"></i></div>
+          <div class="stat-details">
+            <span class="stat-label">คะแนนรวมสูงสุด</span>
+            <h3 class="stat-value" id="stat-top-score">0</h3>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa-solid fa-crown"></i></div>
+          <div class="stat-details">
+            <span class="stat-label">ผู้นำคะแนน</span>
+            <h3 class="stat-value" id="stat-leader">ไม่มี</h3>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Dynamic Content Viewport -->
+      <div id="app-content" class="content-viewport">
+        <!-- Rendered SPA content goes here -->
+      </div>
+      
+    </main>
+    
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="spinner-container">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+
+  <!-- Client-side SPA Javascript logic -->
+  <script src="app.js" type="module"></script>
+</body>
+</html>
