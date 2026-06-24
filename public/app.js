@@ -482,7 +482,7 @@ async function loadAreaPrimePage(isSilent = false) {
         <!-- Top Lead Area candidates -->
         <div class="candidates-table-container" style="flex: 1;">
           <div class="table-header">
-            <h3>อันดับผู้ว่าฯ เขต${state.selectedAreaPrime}</h3>
+            <h3>อันดับผู้ว่าฯ เขต<span id="prime-area-title-text">${state.selectedAreaPrime}</span></h3>
           </div>
           <div class="candidates-list" id="area-prime-rows">
             <!-- Loaded dynamically below -->
@@ -495,13 +495,13 @@ async function loadAreaPrimePage(isSilent = false) {
             <i class="fa-solid fa-map-location-dot"></i>
             <div>
               <h3 style="color: #fff;">ข้อมูลการเลือกตั้งรายเขต</h3>
-              <p style="font-size: 0.8rem; color: var(--text-muted);">สรุปข้อมูลเบื้องต้นของพื้นที่เขต${state.selectedAreaPrime}</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">สรุปข้อมูลเบื้องต้นของพื้นที่เขต<span id="prime-area-summary-text">${state.selectedAreaPrime}</span></p>
             </div>
           </div>
           <div class="webhook-details">
             <div class="detail-row">
               <label>เขตการเลือกตั้ง</label>
-              <div class="detail-value-box">เขต${state.selectedAreaPrime}</div>
+              <div class="detail-value-box">เขต<span id="prime-area-detail-text">${state.selectedAreaPrime}</span></div>
             </div>
             <div class="detail-row">
               <label>ความคืบหน้าการนับคะแนนในพื้นที่</label>
@@ -578,6 +578,14 @@ async function fetchAndRenderAreaPrimeData() {
   const leaderText = document.getElementById('area-leader-text');
   
   if (!rowsContainer) return;
+
+  // Update dynamic titles/labels
+  const titleText = document.getElementById('prime-area-title-text');
+  const summaryText = document.getElementById('prime-area-summary-text');
+  const detailText = document.getElementById('prime-area-detail-text');
+  if (titleText) titleText.textContent = state.selectedAreaPrime;
+  if (summaryText) summaryText.textContent = state.selectedAreaPrime;
+  if (detailText) detailText.textContent = state.selectedAreaPrime;
   
   try {
     const scores = await apiRequest(`/api/areas/${encodeURIComponent(state.selectedAreaPrime)}/prime`);
@@ -677,7 +685,7 @@ async function loadAreaLocalPage(isSilent = false) {
       
       <div class="candidates-table-container fade-in-up">
         <div class="table-header">
-          <h3>ผลคะแนนผู้สมัคร ส.ก. เขต${state.selectedAreaLocal}</h3>
+          <h3>ผลคะแนนผู้สมัคร ส.ก. เขต<span id="local-area-title-text">${state.selectedAreaLocal}</span></h3>
           <div class="last-update" style="font-size: 0.85rem;">
             <span>ความคืบหน้านับคะแนนเขต: </span>
             <strong id="local-progress-text">--%</strong>
@@ -750,6 +758,10 @@ async function fetchAndRenderAreaLocalData() {
   const progressText = document.getElementById('local-progress-text');
   
   if (!rowsContainer) return;
+
+  // Update dynamic title
+  const titleText = document.getElementById('local-area-title-text');
+  if (titleText) titleText.textContent = state.selectedAreaLocal;
   
   try {
     const scores = await apiRequest(`/api/areas/${encodeURIComponent(state.selectedAreaLocal)}/local`);
