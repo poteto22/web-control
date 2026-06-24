@@ -105,7 +105,23 @@ app.get('/api/areas/:areaName/local', async (req, res) => {
       'SELECT * FROM candidatescore_areas WHERE areaName = ? ORDER BY score DESC',
       [areaName]
     );
-    res.json(rows);
+
+    // Map candidateImageUrl from the filename in pic column
+    const mappedRows = rows.map(row => {
+      let candidateImageUrl = row.candidateImageUrl;
+      if (row.pic) {
+        const filename = row.pic.split(/[\\/]/).pop();
+        if (filename) {
+          candidateImageUrl = `/candidates/${filename}`;
+        }
+      }
+      return {
+        ...row,
+        candidateImageUrl
+      };
+    });
+
+    res.json(mappedRows);
   } catch (error) {
     console.error(`Error fetching local scores for area ${req.params.areaName}:`, error);
     res.status(500).json({ error: 'Failed to fetch area local scores', details: error.message });
