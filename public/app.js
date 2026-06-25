@@ -796,7 +796,7 @@ async function fetchAndRenderAreaLocalData() {
             <h5>${item.candidateName}</h5>
             <span class="candidate-party-tag">
               <span class="color-dot-indicator" style="background-color: ${color}"></span>
-              ผู้สมัครสมาชิกสภากรุงเทพมหานคร (ส.ก.)
+              ${item.partiesName || 'ผู้สมัครอิสระ'}
             </span>
           </div>
           
